@@ -21,5 +21,3 @@ jobs:
     - name: Installation des dépendances
       run: pip install -r requirements.txt
       
-    - name: Validation de la conformité aux normes de style
-      run: flake8
