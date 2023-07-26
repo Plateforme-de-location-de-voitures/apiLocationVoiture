@@ -77,14 +77,15 @@ python manage.py runserver
 - Utilisation : **Postman**
   ![Doc 8](https://github.com/Plateforme-de-location-de-voitures/apiLocationVoiture/assets/101883211/453522a4-64a5-46e7-9170-5480dce997b7)
 
-
 9. `/api/marques`
 - Méthode : GET
 - Description : Cet endpoint permet de récupérer la liste des marques disponibles.
+  ![Doc 10](https://github.com/Plateforme-de-location-de-voitures/apiLocationVoiture/assets/101883211/bd40d1af-3c82-47cc-bee8-07fc1dd829c4)
 
 10. `/api/marque/create`
 - Méthode : POST
 - Description : Cet endpoint permet de créer une nouvelle marque en envoyant les informations nécessaires pour la nouvelle marque.
+  ![Doc 9](https://github.com/Plateforme-de-location-de-voitures/apiLocationVoiture/assets/101883211/25b2363a-d9c3-4cf9-9d5a-994320cd4b6e)
 
 11. `/api/marque/update/<int:marque_id>/`
 - Méthode : PUT
@@ -97,10 +98,12 @@ python manage.py runserver
 13. `/api/modeles`
 - Méthode : GET
 - Description : Cet endpoint permet de récupérer la liste des modèles (modeles) disponibles.
+  ![Doc 12](https://github.com/Plateforme-de-location-de-voitures/apiLocationVoiture/assets/101883211/8d408184-e080-46a7-8665-be3c75018801)
 
 14. `/api/modele/create`
 - Méthode : POST
 - Description : Cet endpoint permet de créer un nouveau modèle en envoyant les informations nécessaires pour le nouveau modèle.
+  ![Doc 11](https://github.com/Plateforme-de-location-de-voitures/apiLocationVoiture/assets/101883211/c728b807-f3b5-46a8-93d5-9aedb4fe64aa)
 
 15. `/api/modele/update/<int:modele_id>/`
 - Méthode : PUT
