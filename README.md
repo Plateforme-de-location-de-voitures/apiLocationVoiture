@@ -12,15 +12,17 @@ Le SGBD (Système de Gestion de Base de Données) utilisé dans ce projet est My
 
 Dans le fichier `settings.py` (situé dans le dossier du projet), vous trouverez une section appelée `DATABASES`, qui ressemblera à ceci :
 
+Si vous utilisez les identifiants par défaut de MySQL (nom d'utilisateur: root et pas de mot de passe), la configuration sera la suivante :
+
 ```python
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'nom_de_votre_base_de_donnees',
-        'USER': 'votre_nom_d_utilisateur_mysql',
-        'PASSWORD': 'votre_mot_de_passe_mysql',
-        'HOST': 'localhost',  # Ou l'adresse IP de votre serveur MySQL
-        'PORT': '3306',  # Port MySQL par défaut
+        'NAME': 'api_location',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 ```
