@@ -87,11 +87,11 @@ python manage.py runserver
 - Description : Cet endpoint permet de créer une nouvelle marque en envoyant les informations nécessaires pour la nouvelle marque.
   ![Doc 9](https://github.com/Plateforme-de-location-de-voitures/apiLocationVoiture/assets/101883211/25b2363a-d9c3-4cf9-9d5a-994320cd4b6e)
 
-11. `/api/marque/update/<int:marque_id>/`
+11. `/api/marque/update/<int:marque_id>`
 - Méthode : PUT
 - Description : Cet endpoint permet de mettre à jour une marque existante en spécifiant son identifiant (marque_id) dans l'URL et en envoyant les nouvelles informations de la marque.
 
-12. `/api/marque/delete/<int:marque_id>/`
+12. `/api/marque/delete/<int:marque_id>`
 - Méthode : DELETE
 - Description : Cet endpoint permet de supprimer une marque existante en spécifiant son l'id de la marque
 
@@ -105,10 +105,10 @@ python manage.py runserver
 - Description : Cet endpoint permet de créer un nouveau modèle en envoyant les informations nécessaires pour le nouveau modèle.
   ![Doc 11](https://github.com/Plateforme-de-location-de-voitures/apiLocationVoiture/assets/101883211/c728b807-f3b5-46a8-93d5-9aedb4fe64aa)
 
-15. `/api/modele/update/<int:modele_id>/`
+15. `/api/modele/update/<int:modele_id>`
 - Méthode : PUT
 - Description : Cet endpoint permet de mettre à jour un modèle existant en spécifiant son identifiant (modele_id) dans l'URL et en envoyant les nouvelles informations du modèle.
 
-16. `/api/modele/delete/<int:modele_id>/`
+16. `/api/modele/delete/<int:modele_id>`
 - Méthode : DELETE
 - Description : Cet endpoint permet de supprimer un modèle existant en spécifiant son identifiant (modele_id) dans l'URL.
