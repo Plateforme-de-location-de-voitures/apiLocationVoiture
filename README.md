@@ -1,4 +1,4 @@
-# apiLocationVoiture
+![Doc 1](https://github.com/Plateforme-de-location-de-voitures/apiLocationVoiture/assets/101883211/3ff915ba-6968-4da5-b0cb-feec260caed8)# apiLocationVoiture
 API implémentée en Django Rest Framework qui nous permettra de gérer les compagnies de réservation de voiture.
 
 ### Installation des packages de requirements.txt
@@ -108,7 +108,92 @@ python manage.py runserver
 15. `/api/modele/update/<int:modele_id>`
 - Méthode : PUT
 - Description : Cet endpoint permet de mettre à jour un modèle existant en spécifiant son identifiant (modele_id) dans l'URL et en envoyant les nouvelles informations du modèle.
+  ![Doc 13](https://github.com/Plateforme-de-location-de-voitures/apiLocationVoiture/assets/101883211/99c12ae1-572b-49f2-8843-2350cdc35ba4)
 
 16. `/api/modele/delete/<int:modele_id>`
 - Méthode : DELETE
 - Description : Cet endpoint permet de supprimer un modèle existant en spécifiant son identifiant (modele_id) dans l'URL.
+
+17. `/api/voitures`
+- Méthode : GET
+- Description : Cet endpoint permet de récupérer la liste des voitures disponibles.
+  ![Doc 15](https://github.com/Plateforme-de-location-de-voitures/apiLocationVoiture/assets/101883211/b00fa280-499d-4d2b-bd44-878a98c8bf0a)
+
+18. `/api/voiture/create`
+- Méthode : POST
+- Description : Cet endpoint permet de créer une nouvelle voiture en envoyant les informations nécessaires pour la nouvelle voiture.
+  ![Doc 14](https://github.com/Plateforme-de-location-de-voitures/apiLocationVoiture/assets/101883211/7ad446d0-9d99-48b5-8ba0-2150633d1aaa)
+
+19. `/api/voiture/<int:pk>`
+- Méthode : GET
+- Description : Cet endpoint permet de récupérer les détails d'une voiture spécifique en utilisant sa clé primaire (pk) dans l'URL. La clé primaire est généralement un identifiant unique qui permet d'identifier de manière univoque une voiture dans la base de données.
+
+20. `/api/voiture/update/<int:pk>`
+- Méthode : PUT
+- Description : Cet endpoint permet de mettre à jour une voiture existante en spécifiant sa clé primaire (pk) dans l'URL et en envoyant les nouvelles informations de la voiture.
+
+21. `/api/voiture/delete/<int:pk>`
+- Méthode : DELETE
+- Description : Cet endpoint permet de supprimer une voiture existante en spécifiant sa clé primaire (pk) dans l'URL.
+
+22. `/api/images/voitures`
+- Méthode : GET
+- Description : Cet endpoint permet de récupérer la liste des images de voitures disponibles (peut-être la liste de toutes les images de voitures dans la base de données).
+  ![Doc 18](https://github.com/Plateforme-de-location-de-voitures/apiLocationVoiture/assets/101883211/a2b9c935-e22d-4f79-9ff1-93a74e3b59ef)
+
+23. `/api/images/voiture/<int:voiture_id>`
+- Méthode : GET
+- Description : Cet endpoint permet de récupérer les images associées à une voiture spécifique en utilisant son identifiant (voiture_id) dans l'URL.
+  ![Doc 19](https://github.com/Plateforme-de-location-de-voitures/apiLocationVoiture/assets/101883211/59e68201-b737-4350-b005-16ffe499c890)
+
+
+24. `/api/image/voiture/create`
+- Méthode : POST
+- Description : Cet endpoint permet de créer une nouvelle image de voiture en envoyant les informations nécessaires pour la nouvelle image.
+  ![Doc 16](https://github.com/Plateforme-de-location-de-voitures/apiLocationVoiture/assets/101883211/00685903-f884-44dc-b12b-161bf90561b9)
+
+  ![Doc 17](https://github.com/Plateforme-de-location-de-voitures/apiLocationVoiture/assets/101883211/5ad225df-4e52-4535-9f66-0339194dcfd2)
+
+25. `/api/image/voiture/<int:pk>`
+- Méthode : GET
+- Description : Cet endpoint permet de récupérer les détails d'une image de voiture spécifique en utilisant sa clé primaire (pk) dans l'URL.
+
+26. `/api/image/voiture/delete/<int:pk>`
+- Méthode : DELETE
+- Description : Cet endpoint permet de supprimer une image de voiture existante en spécifiant sa clé primaire (pk) dans l'URL.
+
+27. `/api/reservations`
+- Méthode : GET
+- Description : Cet endpoint permet de récupérer la liste des réservations disponibles.
+  ![Doc 21](https://github.com/Plateforme-de-location-de-voitures/apiLocationVoiture/assets/101883211/647e9d25-10b4-42b1-a08d-9315e9dc5041)
+
+28. `/api/reservation/create`
+- Méthode : POST
+- Description : Cet endpoint permet de créer une nouvelle réservation en envoyant les informations nécessaires pour la nouvelle réservation.
+  ![Doc 20](https://github.com/Plateforme-de-location-de-voitures/apiLocationVoiture/assets/101883211/9ac3da81-e026-438e-b6bd-4db5c8267728)
+
+29. `/api/reservation/recherche/<str:nom_client>`
+- Méthode : GET
+- Description : Cet endpoint permet de rechercher des réservations en fonction du nom du client (nom_client) fourni dans l'URL.
+
+30. `/api/reservation/update/<int:reservation_id>/`
+- Méthode : PUT
+- Description : Cet endpoint permet de mettre à jour une réservation existante en spécifiant son identifiant (reservation_id) dans l'URL et en envoyant les nouvelles informations de la réservation.
+
+31. `/api/reservation/delete/<int:reservation_id>/`
+- Méthode : DELETE
+- Description : Cet endpoint permet de supprimer une réservation existante en spécifiant son identifiant (reservation_id) dans l'URL.
+
+32. `/api/reservation/detail/<int:reservation_id>/`
+- Méthode : GET
+- Description : Cet endpoint permet de récupérer les détails d'une réservation spécifique en utilisant son identifiant (reservation_id) dans l'URL.
+  ![Doc 1](https://github.com/Plateforme-de-location-de-voitures/apiLocationVoiture/assets/101883211/a9c6d485-01f9-4f4f-b016-a16d0c48be88)
+
+33. `/api/fin/<int:reservation_id>/`
+- Méthode : POST
+- Description : Cet endpoint permet de marquer la fin d'une réservation spécifique en utilisant son identifiant (reservation_id) dans l'URL.
+
+34. `/api/voiture/disponible/<str:date_reservation>/<str:date_retour>/`
+- Méthode : GET
+- Description : Cet endpoint permet de rechercher les voitures disponibles entre deux dates spécifiées (date_reservation et date_retour) dans l'URL.
+  ![Doc 2](https://github.com/Plateforme-de-location-de-voitures/apiLocationVoiture/assets/101883211/a8c059c8-de8c-4707-bf89-9e0d0b7ea96a)
