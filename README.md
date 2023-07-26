@@ -37,7 +37,7 @@ python manage.py runserver
 
 ### Endpoints disponibles
 
-#### users
+### users
 1. `/api/roles`
 - Méthode : GET
 - Description : Renvoie la liste des rôles disponibles dans l'application.
@@ -78,7 +78,7 @@ python manage.py runserver
 - Utilisation : **Postman**
   ![Doc 8](https://github.com/Plateforme-de-location-de-voitures/apiLocationVoiture/assets/101883211/453522a4-64a5-46e7-9170-5480dce997b7)
 
-#### marque
+### marque
 9. `/api/marques`
 - Méthode : GET
 - Description : Cet endpoint permet de récupérer la liste des marques disponibles.
@@ -97,7 +97,7 @@ python manage.py runserver
 - Méthode : DELETE
 - Description : Cet endpoint permet de supprimer une marque existante en spécifiant son l'id de la marque
 
-#### modele
+### modele
 13. `/api/modeles`
 - Méthode : GET
 - Description : Cet endpoint permet de récupérer la liste des modèles (modeles) disponibles.
@@ -117,7 +117,7 @@ python manage.py runserver
 - Méthode : DELETE
 - Description : Cet endpoint permet de supprimer un modèle existant en spécifiant son identifiant (modele_id) dans l'URL.
 
-#### voiture
+### voiture
 17. `/api/voitures`
 - Méthode : GET
 - Description : Cet endpoint permet de récupérer la liste des voitures disponibles.
@@ -140,7 +140,7 @@ python manage.py runserver
 - Méthode : DELETE
 - Description : Cet endpoint permet de supprimer une voiture existante en spécifiant sa clé primaire (pk) dans l'URL.
 
-#### imageVoiture
+### imageVoiture
 22. `/api/images/voitures`
 - Méthode : GET
 - Description : Cet endpoint permet de récupérer la liste des images de voitures disponibles (peut-être la liste de toutes les images de voitures dans la base de données).
@@ -167,7 +167,7 @@ python manage.py runserver
 - Méthode : DELETE
 - Description : Cet endpoint permet de supprimer une image de voiture existante en spécifiant sa clé primaire (pk) dans l'URL.
 
-#### reservations
+### reservations
 27. `/api/reservations`
 - Méthode : GET
 - Description : Cet endpoint permet de récupérer la liste des réservations disponibles.
@@ -181,6 +181,7 @@ python manage.py runserver
 29. `/api/reservation/recherche/<str:nom_client>`
 - Méthode : GET
 - Description : Cet endpoint permet de rechercher des réservations en fonction du nom du client (nom_client) fourni dans l'URL.
+  ![3](https://github.com/Plateforme-de-location-de-voitures/apiLocationVoiture/assets/101883211/e4833e37-3e74-40f4-a925-aa42ce497c8f)
 
 30. `/api/reservation/update/<int:reservation_id>/`
 - Méthode : PUT
