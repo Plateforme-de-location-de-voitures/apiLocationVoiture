@@ -79,33 +79,33 @@ python manage.py runserver
 
 
 9. `/api/marques`
-   - Méthode HTTP supportée : GET
-   - Description : Cet endpoint permet de récupérer la liste des marques disponibles.
+- Méthode : GET
+- Description : Cet endpoint permet de récupérer la liste des marques disponibles.
 
 10. `/api/marque/create`
-   - Méthode HTTP supportée : POST
-   - Description : Cet endpoint permet de créer une nouvelle marque en envoyant les informations nécessaires pour la nouvelle marque.
+- Méthode : POST
+- Description : Cet endpoint permet de créer une nouvelle marque en envoyant les informations nécessaires pour la nouvelle marque.
 
 11. `/api/marque/update/<int:marque_id>/`
-   - Méthode HTTP supportée : PUT
-   - Description : Cet endpoint permet de mettre à jour une marque existante en spécifiant son identifiant (marque_id) dans l'URL et en envoyant les nouvelles informations de la marque.
+- Méthode : PUT
+- Description : Cet endpoint permet de mettre à jour une marque existante en spécifiant son identifiant (marque_id) dans l'URL et en envoyant les nouvelles informations de la marque.
 
 12. `/api/marque/delete/<int:marque_id>/`
-   - Méthode HTTP supportée : DELETE
-   - Description : Cet endpoint permet de supprimer une marque existante en spécifiant son l'id de la marque
+- Méthode : DELETE
+- Description : Cet endpoint permet de supprimer une marque existante en spécifiant son l'id de la marque
 
 13. `/api/modeles`
-   - Méthode HTTP supportée : GET
-   - Description : Cet endpoint permet de récupérer la liste des modèles (modeles) disponibles.
+- Méthode : GET
+- Description : Cet endpoint permet de récupérer la liste des modèles (modeles) disponibles.
 
 14. `/api/modele/create`
-   - Méthode HTTP supportée : POST
-   - Description : Cet endpoint permet de créer un nouveau modèle en envoyant les informations nécessaires pour le nouveau modèle.
+- Méthode : POST
+- Description : Cet endpoint permet de créer un nouveau modèle en envoyant les informations nécessaires pour le nouveau modèle.
 
 15. `/api/modele/update/<int:modele_id>/`
-   - Méthode HTTP supportée : PUT
-   - Description : Cet endpoint permet de mettre à jour un modèle existant en spécifiant son identifiant (modele_id) dans l'URL et en envoyant les nouvelles informations du modèle.
+- Méthode : PUT
+- Description : Cet endpoint permet de mettre à jour un modèle existant en spécifiant son identifiant (modele_id) dans l'URL et en envoyant les nouvelles informations du modèle.
 
 16. `/api/modele/delete/<int:modele_id>/`
-   - Méthode HTTP supportée : DELETE
-   - Description : Cet endpoint permet de supprimer un modèle existant en spécifiant son identifiant (modele_id) dans l'URL.
+- Méthode : DELETE
+- Description : Cet endpoint permet de supprimer un modèle existant en spécifiant son identifiant (modele_id) dans l'URL.
