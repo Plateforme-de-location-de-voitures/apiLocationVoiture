@@ -47,32 +47,65 @@ python manage.py runserver
 
   ![Doc 3](https://github.com/Plateforme-de-location-de-voitures/apiLocationVoiture/assets/101883211/4fcab34d-2114-4402-89f2-2887e0550615)
 
-2. `/role/<int:role_id>`
+2. `/api/role/<int:role_id>`
 - Méthode : GET
 - Description : Renvoie les détails d'un rôle spécifique identifié par son ID.
 - Utilisation : **Postman**
   ![Doc 4](https://github.com/Plateforme-de-location-de-voitures/apiLocationVoiture/assets/101883211/c5a1bb2f-1756-4fb0-9776-fccf15bd3f6b)
 
-3. `/register`
+3. `/api/register`
 - Méthode : POST
 - Description : Permet à un utilisateur de s'inscrire dans l'application.
 - Utilisation : **Postman**
   ![Doc 5](https://github.com/Plateforme-de-location-de-voitures/apiLocationVoiture/assets/101883211/c7f14d33-2624-4b73-a22e-c2b91a420169)
 
-4. `/login`
+4. `/api/login`
 - Méthode : POST
 - Description : Permet à un utilisateur de se connecter à l'application.
 - Utilisation : **Postman**
   ![Doc 6](https://github.com/Plateforme-de-location-de-voitures/apiLocationVoiture/assets/101883211/8e09a78b-7607-46d2-b327-4d1ad93ad532)
 
-5. `/user`
+5. `/api/user`
 - Méthode : GET
 - Description : Renvoie les détails de l'utilisateur actuellement connecté en fonction de **l'access token** recupéré lors du login.
 - Utilisation : **Postman**
   ![Doc 7](https://github.com/Plateforme-de-location-de-voitures/apiLocationVoiture/assets/101883211/eb722080-426e-4632-8f10-a51ed85b3241)
 
-7. `/logout`
+7. `/api/logout`
 - Méthode : POST
 - Description : Permet à l'utilisateur actuellement connecté de se déconnecter.
 - Utilisation : **Postman**
   ![Doc 8](https://github.com/Plateforme-de-location-de-voitures/apiLocationVoiture/assets/101883211/453522a4-64a5-46e7-9170-5480dce997b7)
+
+
+9. `/api/marques`
+   - Méthode HTTP supportée : GET
+   - Description : Cet endpoint permet de récupérer la liste des marques disponibles.
+
+10. `/api/marque/create`
+   - Méthode HTTP supportée : POST
+   - Description : Cet endpoint permet de créer une nouvelle marque en envoyant les informations nécessaires pour la nouvelle marque.
+
+11. `/api/marque/update/<int:marque_id>/`
+   - Méthode HTTP supportée : PUT
+   - Description : Cet endpoint permet de mettre à jour une marque existante en spécifiant son identifiant (marque_id) dans l'URL et en envoyant les nouvelles informations de la marque.
+
+12. `/api/marque/delete/<int:marque_id>/`
+   - Méthode HTTP supportée : DELETE
+   - Description : Cet endpoint permet de supprimer une marque existante en spécifiant son l'id de la marque
+
+13. `/api/modeles`
+   - Méthode HTTP supportée : GET
+   - Description : Cet endpoint permet de récupérer la liste des modèles (modeles) disponibles.
+
+14. `/api/modele/create`
+   - Méthode HTTP supportée : POST
+   - Description : Cet endpoint permet de créer un nouveau modèle en envoyant les informations nécessaires pour le nouveau modèle.
+
+15. `/api/modele/update/<int:modele_id>/`
+   - Méthode HTTP supportée : PUT
+   - Description : Cet endpoint permet de mettre à jour un modèle existant en spécifiant son identifiant (modele_id) dans l'URL et en envoyant les nouvelles informations du modèle.
+
+16. `/api/modele/delete/<int:modele_id>/`
+   - Méthode HTTP supportée : DELETE
+   - Description : Cet endpoint permet de supprimer un modèle existant en spécifiant son identifiant (modele_id) dans l'URL.

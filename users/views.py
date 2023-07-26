@@ -18,8 +18,8 @@ class RoleListAPIView(APIView):
 #Fonction pour afficher les détails d'un rôle
 class RoleDetailAPIView(APIView):
     
-    def get(self, request, pk):
-        role = Role.objects.get(pk=pk)
+    def get(self, request, role_id):
+        role = Role.objects.get(pk=role_id)
         serializer = RoleResponseSerializer(role)
         return Response(serializer.data)
 
