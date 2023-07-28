@@ -7,14 +7,14 @@ from .models import ImageVoiture
 from .serializers import ImageVoitureSerializer
 from django.shortcuts import get_object_or_404
 
-#fonction pour afficher la liste des images
+#Classe pour afficher la liste des images
 class ImageVoitureListAPIView(APIView):
     def get(self, request):
         images = ImageVoiture.objects.all()
         serializer = ImageVoitureSerializer(images, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
-#fonction pour afficher les détails d'une image
+#Classe pour afficher les détails d'une image
 class ImageDetailAPIView(APIView):
     def get_object(self, pk):
         return get_object_or_404(ImageVoiture, pk=pk)
@@ -22,20 +22,20 @@ class ImageDetailAPIView(APIView):
     def get(self, request, pk):
         image = self.get_object(pk)
         serializer = ImageVoitureSerializer(image)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
-#fonction pour afficher les images associé a  une voiture en fonction de son id  
+#Classe pour afficher les images associé a  une voiture en fonction de son id  
 class ImageParVoitureAPIView(APIView):   
     def get(self, request, voiture_id):
         try:
             voiture = Voiture.objects.get(id=voiture_id)
             images = ImageVoiture.objects.filter(voiture=voiture)
             serializer = ImageVoitureSerializer(images, many=True)
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         except Voiture.DoesNotExist:
             return Response({"error": "La voiture n'existe pas"}, status=status.HTTP_404_NOT_FOUND)
         
-#fonction pour l'ajout d'une image en fonction de l'id d'une voiture
+#Classe pour l'ajout d'une image en fonction de l'id d'une voiture
 class ImageVoitureCreateAPIView(APIView):
     def post(self, request):
         voiture_id = request.data.get('voiture')
@@ -54,7 +54,7 @@ class ImageVoitureCreateAPIView(APIView):
         
         return Response(images_serializer.data, status=status.HTTP_201_CREATED)
 
-#fonction pour supprimer une voiture  
+#Classe pour supprimer une voiture  
 class ImageVoitureDeleteAPIView(APIView):
 
     def delete(self, request, pk):
