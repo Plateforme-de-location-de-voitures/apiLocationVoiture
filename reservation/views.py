@@ -9,16 +9,16 @@ from voiture.serializers import  VoitureSerializer
 import datetime
 from django.utils import timezone
 
-#fonction pour lister toutes les réservations
+#Classe pour lister toutes les réservations
 class ReservationListAPIView(APIView):
    
     def get(self, request):
         reservations = Reservation.objects.all()  
         serializer = ReservationSerializer(reservations, many=True)
         
-        return Response(serializer.data) 
+        return Response(serializer.data, status=status.HTTP_200_OK) 
 
-#fonction pour créer une réservation
+#Classe pour créer une réservation
 class ReservationCreateAPIView(APIView):
    
     def post(self, request):
@@ -39,7 +39,7 @@ class ReservationCreateAPIView(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-#fonction pour mettre à jour une réservation
+#Classe pour mettre à jour une réservation
 class ReservationUpdateAPIView(APIView):
    
     def put(self, request, reservation_id):
@@ -66,7 +66,7 @@ class ReservationUpdateAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-#fonction pour supprimer une réservation qui est terminée
+#Classe pour supprimer une réservation qui est terminée
 class ReservationDeleteAPIView(APIView):
 
      def delete(self, request, reservation_id):
@@ -84,7 +84,7 @@ class ReservationDeleteAPIView(APIView):
                             status=status.HTTP_400_BAD_REQUEST)
 
 
-#fonction pour rechercher une réservation par le nom du client
+#Classe pour rechercher une réservation par le nom du client
 class ReservationRechercheAPIView(APIView):
 
     def get(self, request, nom_client):
@@ -100,7 +100,7 @@ class ReservationRechercheAPIView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-#fonction pour afficher les détails d'une réservation
+#Classe pour afficher les détails d'une réservation
 class ReservationDetailAPIView(APIView):
     def get(self, request, reservation_id):
         try:
@@ -115,7 +115,7 @@ class ReservationDetailAPIView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-#fonction pour trouver les voitures disponible lorsque l'utilisateur renseigne ses dates de réservation
+#Classe pour trouver les voitures disponible lorsque l'utilisateur renseigne ses dates de réservation
 class RechercheDesVoituresEntreDeuxDatesAPIView(APIView):
 
        def get(self, request, date_reservation, date_retour):
@@ -142,6 +142,7 @@ class RechercheDesVoituresEntreDeuxDatesAPIView(APIView):
         serializer = VoitureSerializer(voitures_disponibles, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+#Classe pour enregistrer la fin d'un réservation
 class FinDuneReservationAPIView(APIView):
     
     def put(self, request, *args, **kwargs):
