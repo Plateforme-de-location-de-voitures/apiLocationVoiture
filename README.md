@@ -128,6 +128,7 @@ python manage.py runserver
 18. `/api/recherche/voitures-par-marque/<str:marque>`
 - Méthode : GET
 - Description : Cet endpoint permet de rechercher les voitures par marque.
+  ![2](https://github.com/Plateforme-de-location-de-voitures/apiLocationVoiture/assets/101883211/f5d50673-240a-4d30-9518-5232c6bfc929)
 
 19. `/api/voiture/create`
 - Méthode : POST
