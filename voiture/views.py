@@ -8,15 +8,18 @@ from users.models import Proprietaire
 from .models import Voiture
 from .serializers import *
 
-# Définition d'une classe pour la méthode GET (Get All)
+# Définition de la classe pour la méthode GET (Get All)
 class VoitureListAPIView(APIView):
-    
+    #Methode pour recupérer toutes les voitures ajoutées
     def get(self, request):
-        voitures = Voiture.objects.all()
-        serializer = VoitureSerializer(voitures, many=True)
-        return Response(serializer.data)
+        try: 
+            voitures = Voiture.objects.all()
+            serializer = VoitureSerializer(voitures, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except:
+            return Response({"error": "Aucune voiture n'a été trouvée."}, status=status.HTTP_404_NOT_FOUND)
 
-# Définition d'une classe pour la méthode POST (Create)
+# Définition de la classe pour la méthode POST (Create)
 class VoitureCreateAPIView(APIView):
     # Méthode POST pour créer une nouvelle instance de Voiture
     def post(self, request):
@@ -52,40 +55,50 @@ class VoitureCreateAPIView(APIView):
         
         # return Response({"message": "Voiture ajoutée avec succès"}, status=status.HTTP_201_CREATED)
 
-# Définition d'une classe pour la méthode GET (Get One)
+# Définition de la classe pour la méthode GET (Get One)
 class VoitureDetailAPIView(APIView):
-    
+    #Méthode pour recupérer les détails d'une voiture
     def get(self, request, pk):
-        voiture = Voiture.objects.get(pk=pk)
-        serializer = VoitureSerializer(voiture)
-        return Response(serializer.data)
+        try:
+            voiture = Voiture.objects.get(pk=pk)
+            serializer = VoitureSerializer(voiture)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except:
+            return Response({"error": "Voiture non trouvée."}, status=status.HTTP_404_NOT_FOUND)
 
 # Définition d'une classe pour la méthode PUT (Update)
 class VoitureUpdateAPIView(APIView):
-
+    #Méthode pour modifier les détails d'une voiture
     def put(self, request, pk):
         try:
             voiture = Voiture.objects.get(pk=pk)
             serializer = VoitureSerializer(voiture, data=request.data)
             if serializer.is_valid():
                 serializer.save()
-                
                 response_serializer = VoitureSerializer(voiture)
-
                 return Response(response_serializer.data, status=status.HTTP_201_CREATED)
-
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except:
-            return Response({"detail": "Voiture not found."}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "Voiture non trouvée."}, status=status.HTTP_404_NOT_FOUND)
         
-# Définition d'une classe pour la méthode DELETE
+# Définition de la classe pour la méthode DELETE
 class VoitureDeleteAPIView(APIView):
-
+    #Méthode pour supprimer une voiture
     def delete(self, request, pk):
         try:
             voiture = Voiture.objects.get(pk=pk)
             voiture.delete()  
             return Response(status=status.HTTP_204_NO_CONTENT)
         except:
-            return Response({"detail": "Voiture not found."}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "Voiture non trouvée."}, status=status.HTTP_404_NOT_FOUND)
 
+# Définition de la classe pour rechercher une voiture en fonction de sa marque
+class RechercheVoitureParMarqueAPIView(APIView):
+    #Méthode pour rechercher une voiture en fonction de sa marque
+    def get(self, request, marque):
+        try:
+            voitures = Voiture.objects.filter(modele__marque__nom__icontains=marque)
+            serializer = VoitureSerializer(voitures, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Voiture.DoesNotExist:
+            return Response({"error": "Voiture non trouvée."}, status=status.HTTP_404_NOT_FOUND)
