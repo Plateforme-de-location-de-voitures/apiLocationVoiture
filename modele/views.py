@@ -6,16 +6,16 @@ from modele.models import Modele
 from modele.serializers import  ModeleSerializer  
 # Create your views here.
 
-#fonction pour lister tous les modeles
+#Classe pour lister tous les modeles
 class ModeleListAPIView(APIView):
    
     def get(self, request):
         modeles = Modele.objects.all()  
         serializer = ModeleSerializer(modeles, many=True)
         
-        return Response(serializer.data) 
+        return Response(serializer.data, status=status.HTTP_200_OK) 
 
-#fonction pour créer un modele 
+#Classe pour créer un modele 
 class ModeleCreateAPIView(APIView):
    
     def post(self, request):
@@ -26,7 +26,7 @@ class ModeleCreateAPIView(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)  
 
-#fonction pour modifier un modèle
+#Classe pour modifier les informations d'un modèle
 class ModeleUpdateAPIView(APIView):
    
     def put(self, request, modele_id):
@@ -43,7 +43,7 @@ class ModeleUpdateAPIView(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-#fonction pour supprimer un modele 
+#Classe pour supprimer un modele 
 class ModeleDeleteAPIView(APIView):
 
      def delete(self, request, modele_id):
