@@ -7,35 +7,35 @@ from users.serializers import ClientSerializer, PersonneResponseSerializer, Pers
 from rest_framework.exceptions import AuthenticationFailed
 import jwt, datetime
 
-#Fonction pour afficher les rôles
+#Classe pour afficher les rôles ajoutés
 class RoleListAPIView(APIView):
-
+    
     def get(self, request):
         roles = Role.objects.all() 
         serializer = RoleResponseSerializer(roles, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
-#Fonction pour afficher les détails d'un rôle
+#Classe pour afficher les détails d'un rôle
 class RoleDetailAPIView(APIView):
-    
+
     def get(self, request, role_id):
         role = Role.objects.get(pk=role_id)
         serializer = RoleResponseSerializer(role)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
-#Fonction pour enregistrer un utilisateur
+#Classe pour enregistrer un utilisateur
 class RegisterAPIView(APIView):
 
     def post(self, request):
         role_id = request.data.get('role', None)
 
         if not role_id:
-            return Response({"error": "Role is required."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "Veuillez spécifier le rôle de l'utilisateur."}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
             role = Role.objects.get(pk=role_id)
         except Role.DoesNotExist:
-            return Response({"error": "Invalid role."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "Rôle invalide."}, status=status.HTTP_400_BAD_REQUEST)
 
         serializer = PersonneSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -51,22 +51,25 @@ class RegisterAPIView(APIView):
             proprietaire_serializer.save()
             return Response(proprietaire_serializer.data, status=status.HTTP_201_CREATED)
 
-        return Response({"error": "Invalid role."}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"error": "Rôle invalide. Veuillez spécifier un rôle valide (ROLE_CLIENT ou ROLE_PROPRIETAIRE)."}, status=status.HTTP_400_BAD_REQUEST)
 
-#Fonction pour connecter un utilisateur  
+#Classe pour connecter un utilisateur  
 class LoginAPIView(APIView):
 
     def post(self, request):
-        email = request.data['email']
-        password = request.data['password']
+        email = request.data.get('email')
+        password = request.data.get('password')
+
+        if not email or not password:
+            raise AuthenticationFailed('Veuillez fournir une adresse e-mail et un mot de passe.')
 
         user = Personne.objects.filter(email=email).first()
 
         if user is None:
-            raise AuthenticationFailed('User not found!')
+            raise AuthenticationFailed('Aucun utilisateur trouvé avec cette adresse e-mail.')
 
         if not user.check_password(password):
-            raise AuthenticationFailed('Incorrect password!')
+            raise AuthenticationFailed('Mot de passe incorrect.')
 
         payload = {
             'id': user.id,
@@ -83,36 +86,36 @@ class LoginAPIView(APIView):
         }
         return response
 
-#Fonction pour recupérer les informations d'un utilisateur connecté
+#Classe pour recupérer les informations d'un utilisateur connecté
 class GetUserAPIView(APIView):
 
     def get(self, request):
         token = request.COOKIES.get('access_token')
 
         if not token:
-            raise AuthenticationFailed('Unauthenticated!')
+            raise AuthenticationFailed('Non authentifié!!')
 
         try:
             payload = jwt.decode(token, 'secret', algorithms=['HS256'])
         except jwt.ExpiredSignatureError:
-            raise AuthenticationFailed('Unauthenticated!')
+            raise AuthenticationFailed('Session expirée. Veuillez vous reconnecter!')
         except (jwt.DecodeError, jwt.InvalidTokenError) as e:
-            raise AuthenticationFailed('Invalid token: {}'.format(e))
+            raise AuthenticationFailed('Jeton invalide : {}'.format(e))
 
         user = Personne.objects.filter(id=payload['id']).first()
         if not user:
-            raise AuthenticationFailed('User not found!')
+            raise AuthenticationFailed('Utilisateur non trouvé!')
 
         serializer = PersonneResponseSerializer(user)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
-#Fonction pour déconnecter un utilisateur
+#Classe pour déconnecter un utilisateur
 class LogoutAPIView(APIView):
     
     def post(self, request):
         response = Response()
         response.delete_cookie('access_token')
         response.data = {
-            'message': 'success'
+            'message': 'success',
         }
         return response
