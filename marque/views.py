@@ -6,16 +6,16 @@ from marque.models import Marque
 from marque.serializers import  MarqueSerializer  
 
 # Create your views here.
-#fonction pour lister toutes les marques
+#Classe pour lister toutes les marques
 class MarqueListAPIView(APIView):
    
     def get(self, request):
         marques = Marque.objects.all()  
         serializer = MarqueSerializer(marques, many=True)
         
-        return Response(serializer.data) 
+        return Response(serializer.data,status=status.HTTP_200_OK) 
 
-#fonction pour créer une marque 
+#Classe pour créer une marque 
 class MarqueCreateAPIView(APIView):
    
     def post(self, request):
@@ -26,7 +26,7 @@ class MarqueCreateAPIView(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)  
 
-#fonction pour modifier une marque
+#Classe pour modifier une marque
 class MarqueUpdateAPIView(APIView):
    
     def put(self, request, marque_id):
@@ -43,7 +43,7 @@ class MarqueUpdateAPIView(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-#fonction pour supprimer une marque 
+#Classe pour supprimer une marque 
 class MarqueDeleteAPIView(APIView):
 
      def delete(self, request, marque_id):
