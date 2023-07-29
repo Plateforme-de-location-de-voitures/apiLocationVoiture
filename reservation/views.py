@@ -76,7 +76,7 @@ class ReservationDeleteAPIView(APIView):
         except Reservation.DoesNotExist:
             return Response({"error": "La réservation spécifiée n'existe pas."}, status=status.HTTP_404_NOT_FOUND)
 
-        if reservation.statutsReservation == True:
+        if reservation.statutReservation == True:
             reservation.delete()
             return Response({"success": "Réservation supprimée avec succès."}, status=status.HTTP_200_OK)
         else:
@@ -160,7 +160,7 @@ class FinDuneReservationAPIView(APIView):
             voiture_a_modifie.statutVoiture = True
         else:
              voiture_a_modifie.statutVoiture = False
-             reservation.statutsReservation = True
+             reservation.statutReservation = True
         voiture_a_modifie.save()
         reservation.save()
         return Response({"message": "Réservation fini avec succès."}, status=status.HTTP_200_OK)

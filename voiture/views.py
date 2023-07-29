@@ -83,13 +83,17 @@ class VoitureUpdateAPIView(APIView):
         
 # Définition de la classe pour la méthode DELETE
 class VoitureDeleteAPIView(APIView):
-    #Méthode pour supprimer une voiture
+    # Méthode pour supprimer une voiture
     def delete(self, request, pk):
         try:
             voiture = Voiture.objects.get(pk=pk)
-            voiture.delete()  
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        except:
+            if voiture.statutVoiture:  # Vérification du statut de la voiture
+                voiture.delete()
+                return Response({"success": "Voiture supprimée avec succès."}, status=status.HTTP_204_NO_CONTENT)
+            else:
+                return Response({"error": "Impossible de supprimer cette voiture car lié à une réservation."},
+                                status=status.HTTP_403_FORBIDDEN)
+        except Voiture.DoesNotExist:
             return Response({"error": "Voiture non trouvée."}, status=status.HTTP_404_NOT_FOUND)
 
 # Définition de la classe pour rechercher une voiture en fonction de sa marque
