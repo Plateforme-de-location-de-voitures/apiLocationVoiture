@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
 from users.models import Role, Personne
-from users.serializers import ClientSerializer, PersonneResponseSerializer, PersonneSerializer, ProprietaireSerializer, RoleResponseSerializer
+from users.serializers import *
 from rest_framework.exceptions import AuthenticationFailed
 import jwt, datetime
 
@@ -22,6 +22,17 @@ class RoleDetailAPIView(APIView):
         role = Role.objects.get(pk=role_id)
         serializer = RoleResponseSerializer(role)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+#Classe pour créer un rôle
+class CreateRoleAPIView(APIView):
+    #Définition de la fonction pour l'ajout d'un rôle
+    def post(self, request):
+        serializer = RoleSerializer(data=request.data)  
+        if serializer.is_valid():  
+            serializer.save()  
+            return Response(serializer.data, status=status.HTTP_201_CREATED)  
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)  
 
 #Classe pour enregistrer un utilisateur
 class RegisterAPIView(APIView):

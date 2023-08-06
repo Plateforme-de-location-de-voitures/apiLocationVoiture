@@ -164,3 +164,24 @@ class FinDuneReservationAPIView(APIView):
         voiture_a_modifie.save()
         reservation.save()
         return Response({"message": "Réservation fini avec succès."}, status=status.HTTP_200_OK)
+    
+#Classe pour afficher les réservations du client
+class ReservationsDuClientView(APIView):
+    def get(self, request, client_id):
+        reservations = Reservation.objects.filter(client=client_id)  
+        serializer = ReservationSerializer(reservations, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+#Classe pour afficher les réservations d'un propriétaire
+class ReservationsDunProprietaire(APIView):
+    def get(self, request, proprietaire_id):
+        try:
+            reservations = Reservation.objects.filter(voiture__proprietaire=proprietaire_id)
+        except Reservation.DoesNotExist:
+            return Response(
+                {"error": "Aucune réservation trouvée pour ce propriétaire."},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        serializer = ReservationSerializer(reservations, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
