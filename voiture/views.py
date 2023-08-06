@@ -18,6 +18,20 @@ class VoitureListAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         except:
             return Response({"error": "Aucune voiture n'a été trouvée."}, status=status.HTTP_404_NOT_FOUND)
+        
+# Définition de la classe pour recupérer les voitures d'un propriétaire
+class VoitureListProprietaireAPIView(APIView):
+    # Méthode POST pour recupérer les voitures d'un propriétaire
+    def get(self, request, proprietaire_id):
+        try:
+            voitures = Voiture.objects.filter(proprietaire=proprietaire_id)
+        except Voiture.DoesNotExist:
+            return Response(
+                {"error": "Aucune voiture trouvée pour ce propriétaire."},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        serializer = VoitureSerializer(voitures, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 # Définition de la classe pour la méthode POST (Create)
 class VoitureCreateAPIView(APIView):
