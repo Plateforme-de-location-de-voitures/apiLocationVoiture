@@ -3,7 +3,11 @@ from .views import *
 
 urlpatterns = [
     path('voitures', VoitureListAPIView.as_view(), name='voiture_list'),
+<<<<<<< HEAD
     path('voitures/proprietaire/<int:proprietaire_id>/', VoitureListProprietaireAPIView.as_view(), name='voitures-list-proprietaire'),
+=======
+    path('voitures/proprietaire/<int:proprietaire_id>', VoitureListProprietaireAPIView.as_view(), name='voitures-list-proprietaire'),
+>>>>>>> d7d4f47375bca9619beca5d014e6407324e4deef
     path('voiture/<int:pk>', VoitureDetailAPIView.as_view(), name='voiture_detail'),
     path('recherche/voitures-par-marque/<str:marque>', RechercheVoitureParMarqueAPIView.as_view(), name='recherche-voitures-par-marque'),
     path('voiture/create', VoitureCreateAPIView.as_view(), name='voiture_create'),

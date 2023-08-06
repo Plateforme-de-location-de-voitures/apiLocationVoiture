@@ -1,6 +1,11 @@
 from rest_framework import serializers
 from users.models import Client, Personne, Proprietaire, Role
 
+class RoleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Role
+        fields = ('code', 'libelle')
+
 class RoleResponseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Role
