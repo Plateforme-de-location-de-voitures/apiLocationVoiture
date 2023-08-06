@@ -164,3 +164,11 @@ class FinDuneReservationAPIView(APIView):
         voiture_a_modifie.save()
         reservation.save()
         return Response({"message": "Réservation fini avec succès."}, status=status.HTTP_200_OK)
+
+#class pour afficher les réservation du client
+
+class ReservationsDuClientView(APIView):
+    def get(self, request, client_id):
+        reservations = Reservation.objects.filter(client=client_id)  
+        serializer = ReservationSerializer(reservations, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

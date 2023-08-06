@@ -3,6 +3,7 @@ from .views import *
 
 urlpatterns = [
     path('reservations', ReservationListAPIView.as_view(), name='reservations_list'),
+    path('reservations/personne/<int:client_id>/', ReservationsDuClientView.as_view(), name='reservations_client'),
     path('reservation/create', ReservationCreateAPIView.as_view(), name='reservation_create'),
     path('reservation/recherche/<str:nom_client>', ReservationRechercheAPIView.as_view(), name='reservation_search'),
     path('reservation/update/<int:reservation_id>/', ReservationUpdateAPIView.as_view(), name='reservation_update'),
