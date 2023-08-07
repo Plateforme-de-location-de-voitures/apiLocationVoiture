@@ -1,3 +1,4 @@
+# Importation des modules nécessaires
 from django.shortcuts import render
 
 from rest_framework.views import APIView
@@ -8,12 +9,6 @@ from modele.models import Modele
 from users.models import Proprietaire
 from .models import Voiture
 from .serializers import *
-# Importation des modules nécessaires
-from rest_framework.views import APIView  # Importe la classe APIView de Django REST framework qui permet de définir des vues personnalisées pour les API.
-from rest_framework import status  # Importe des constantes de statut HTTP pour faciliter la gestion des réponses HTTP.
-from rest_framework.response import Response  # Importe la classe Response de Django REST framework pour gérer les réponses des API.
-from .models import Voiture  # Importe le modèle Voiture depuis le fichier models.py du module "Voiture".
-from .serializers import VoitureResponseSerializer, VoitureSerializer  # Importe les classes de sérialisation VoitureResponseSerializer et VoitureSerializer depuis le fichier serializers.py du module "Voiture".
 
 # Définition d'une classe pour la méthode GET (Get All)
 class VoitureListAPIView(APIView):
