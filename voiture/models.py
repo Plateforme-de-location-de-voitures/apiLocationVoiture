@@ -1,9 +1,9 @@
 from django.db import models
+
 from modele.models import Modele
 
 from users.models import Proprietaire
 
-# Create your models here.
 class Voiture(models.Model):
     id = models.AutoField(primary_key=True)
     proprietaire = models.ForeignKey(Proprietaire, on_delete=models.CASCADE)
@@ -16,6 +16,6 @@ class Voiture(models.Model):
     puissance = models.FloatField()
     imagePrincipal = models.ImageField(upload_to="voiture_images", default="", null=True, blank=True)
     statutVoiture = models.BooleanField()
-
-    def __str__(self):
+# Create your models here.
+    def __str__(self) -> str:
         return str(self.numeroSerie)
