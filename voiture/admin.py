@@ -6,5 +6,5 @@ from .models import Voiture
 @admin.register(Voiture)
 
 class Voiture(admin.ModelAdmin):
-   
+
     pass
