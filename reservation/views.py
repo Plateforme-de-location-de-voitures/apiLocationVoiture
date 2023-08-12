@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.response import Response  
 from reservation.models import Reservation  
 from voiture.models import Voiture
-from reservation.serializers import  ReservationSerializer  
+from reservation.serializers import  *  
 from voiture.serializers import  VoitureSerializer  
 import datetime
 from django.utils import timezone
@@ -14,7 +14,7 @@ class ReservationListAPIView(APIView):
    
     def get(self, request):
         reservations = Reservation.objects.all()  
-        serializer = ReservationSerializer(reservations, many=True)
+        serializer = ReservationResponseSerializer(reservations, many=True)
         
         return Response(serializer.data, status=status.HTTP_200_OK) 
 
@@ -34,8 +34,12 @@ class ReservationCreateAPIView(APIView):
             )
 
         if serializer.is_valid():  
-            serializer.save()  
-            return Response(serializer.data, status=status.HTTP_201_CREATED)  
+            serializer.save()
+
+            instance = Reservation.objects.get(dateReservation=serializer.data.get('dateReservation'))
+            response_serializer = ReservationResponseSerializer(instance)
+
+            return Response(response_serializer.data, status=status.HTTP_201_CREATED)  
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -61,7 +65,11 @@ class ReservationUpdateAPIView(APIView):
 
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
+
+            instance = Reservation.objects.get(dateReservation=serializer.data.get('dateReservation'))
+            response_serializer = ReservationResponseSerializer(instance)
+            
+            return Response(response_serializer.data, status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -96,7 +104,7 @@ class ReservationRechercheAPIView(APIView):
             reservations = reservations.filter(client__nom__icontains=nom_client)
 
         # Utilisez votre sérialiseur pour sérialiser les résultats
-        serializer = ReservationSerializer(reservations, many=True)
+        serializer = ReservationResponseSerializer(reservations, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -111,7 +119,7 @@ class ReservationDetailAPIView(APIView):
                 status=status.HTTP_404_NOT_FOUND
             )
 
-        serializer = ReservationSerializer(reservation)
+        serializer = ReservationResponseSerializer(reservation)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -139,7 +147,7 @@ class RechercheDesVoituresEntreDeuxDatesAPIView(APIView):
         voitures_indisponibles = Voiture.objects.filter(reservation__in=reservations_chevauchantes)
         voitures_disponibles = Voiture.objects.filter(statutVoiture =False).exclude(id__in=voitures_indisponibles)
 
-        serializer = VoitureSerializer(voitures_disponibles, many=True)
+        serializer = VoitureResponseSerializer(voitures_disponibles, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 #Classe pour enregistrer la fin d'un réservation
@@ -169,7 +177,7 @@ class FinDuneReservationAPIView(APIView):
 class ReservationsDuClientView(APIView):
     def get(self, request, client_id):
         reservations = Reservation.objects.filter(client=client_id)  
-        serializer = ReservationSerializer(reservations, many=True)
+        serializer = ReservationResponseSerializer(reservations, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 #Classe pour afficher les réservations d'un propriétaire
@@ -183,5 +191,5 @@ class ReservationsDunProprietaire(APIView):
                 status=status.HTTP_404_NOT_FOUND
             )
 
-        serializer = ReservationSerializer(reservations, many=True)
+        serializer = ReservationResponseSerializer(reservations, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)

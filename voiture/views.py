@@ -14,7 +14,7 @@ class VoitureListAPIView(APIView):
     def get(self, request):
         try: 
             voitures = Voiture.objects.all()
-            serializer = VoitureSerializer(voitures, many=True)
+            serializer = VoitureResponseSerializer(voitures, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except:
             return Response({"error": "Aucune voiture n'a été trouvée."}, status=status.HTTP_404_NOT_FOUND)
@@ -23,6 +23,7 @@ class VoitureListAPIView(APIView):
 class VoitureListProprietaireAPIView(APIView):
     # Méthode POST pour recupérer les voitures d'un propriétaire
     def get(self, request, proprietaire_id):
+        print(proprietaire_id)
         try:
             voitures = Voiture.objects.filter(proprietaire=proprietaire_id)
         except Voiture.DoesNotExist:
@@ -30,7 +31,7 @@ class VoitureListProprietaireAPIView(APIView):
                 {"error": "Aucune voiture trouvée pour ce propriétaire."},
                 status=status.HTTP_404_NOT_FOUND
             )
-        serializer = VoitureSerializer(voitures, many=True)
+        serializer = VoitureResponseSerializer(voitures, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 # Définition de la classe pour la méthode POST (Create)
@@ -52,7 +53,7 @@ class VoitureCreateAPIView(APIView):
             serializer.save()
 
             instance = Voiture.objects.get(numeroSerie=serializer.data.get('numeroSerie'))
-            response_serializer = VoitureSerializer(instance)
+            response_serializer = VoitureResponseSerializer(instance)
 
             return Response(response_serializer.data, status=status.HTTP_201_CREATED)
 
@@ -75,7 +76,7 @@ class VoitureDetailAPIView(APIView):
     def get(self, request, pk):
         try:
             voiture = Voiture.objects.get(pk=pk)
-            serializer = VoitureSerializer(voiture)
+            serializer = VoitureResponseSerializer(voiture)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except:
             return Response({"error": "Voiture non trouvée."}, status=status.HTTP_404_NOT_FOUND)
@@ -89,11 +90,15 @@ class VoitureUpdateAPIView(APIView):
             serializer = VoitureSerializer(voiture, data=request.data)
             if serializer.is_valid():
                 serializer.save()
-                response_serializer = VoitureSerializer(voiture)
+
+                instance = Voiture.objects.get(numeroSerie=serializer.data.get('numeroSerie'))
+                response_serializer = VoitureResponseSerializer(instance)
+
                 return Response(response_serializer.data, status=status.HTTP_201_CREATED)
+
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except:
-            return Response({"error": "Voiture non trouvée."}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"detail": "Voiture not found."}, status=status.HTTP_404_NOT_FOUND)
         
 # Définition de la classe pour la méthode DELETE
 class VoitureDeleteAPIView(APIView):
@@ -102,11 +107,12 @@ class VoitureDeleteAPIView(APIView):
         try:
             voiture = Voiture.objects.get(pk=pk)
             if voiture.statutVoiture:  # Vérification du statut de la voiture
-                voiture.delete()
-                return Response({"success": "Voiture supprimée avec succès."}, status=status.HTTP_204_NO_CONTENT)
-            else:
                 return Response({"error": "Impossible de supprimer cette voiture car lié à une réservation."},
                                 status=status.HTTP_403_FORBIDDEN)
+            else:
+                voiture.delete()
+                return Response({"success": "Voiture supprimée avec succès."}, status=status.HTTP_204_NO_CONTENT)
+                
         except Voiture.DoesNotExist:
             return Response({"error": "Voiture non trouvée."}, status=status.HTTP_404_NOT_FOUND)
 
@@ -116,7 +122,7 @@ class RechercheVoitureParMarqueAPIView(APIView):
     def get(self, request, marque):
         try:
             voitures = Voiture.objects.filter(modele__marque__nom__icontains=marque)
-            serializer = VoitureSerializer(voitures, many=True)
+            serializer = VoitureResponseSerializer(voitures, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Voiture.DoesNotExist:
             return Response({"error": "Voiture non trouvée."}, status=status.HTTP_404_NOT_FOUND)

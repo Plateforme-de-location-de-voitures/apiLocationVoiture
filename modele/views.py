@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework import status  
 from rest_framework.response import Response  
 from modele.models import Modele  
-from modele.serializers import  ModeleSerializer  
+from modele.serializers import  *  
 # Create your views here.
 
 #Classe pour lister tous les modeles
@@ -11,7 +11,7 @@ class ModeleListAPIView(APIView):
    
     def get(self, request):
         modeles = Modele.objects.all()  
-        serializer = ModeleSerializer(modeles, many=True)
+        serializer = ModeleResponseSerializer(modeles, many=True)
         
         return Response(serializer.data, status=status.HTTP_200_OK) 
 
@@ -22,7 +22,11 @@ class ModeleCreateAPIView(APIView):
         serializer = ModeleSerializer(data=request.data)  
         if serializer.is_valid():  
             serializer.save()  
-            return Response(serializer.data, status=status.HTTP_201_CREATED)  
+
+            instance = Modele.objects.get(nom=serializer.data.get('nom'))
+            response_serializer = ModeleResponseSerializer(instance)
+
+            return Response(response_serializer.data, status=status.HTTP_201_CREATED)  
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)  
 
@@ -39,7 +43,11 @@ class ModeleUpdateAPIView(APIView):
 
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
+
+            instance = Modele.objects.get(nom=serializer.data.get('nom'))
+            response_serializer = ModeleResponseSerializer(instance)
+
+            return Response(response_serializer.data, status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
