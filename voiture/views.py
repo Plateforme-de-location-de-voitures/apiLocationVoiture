@@ -1,9 +1,11 @@
+from datetime import date
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
 from modele.models import Modele
-
+from reservation.models import Reservation
+from django.db.models import Q
 from users.models import Proprietaire
 from .models import Voiture
 from .serializers import *
@@ -102,19 +104,25 @@ class VoitureUpdateAPIView(APIView):
         
 # Définition de la classe pour la méthode DELETE
 class VoitureDeleteAPIView(APIView):
-    # Méthode pour supprimer une voiture
     def delete(self, request, pk):
         try:
             voiture = Voiture.objects.get(pk=pk)
-            if voiture.statutVoiture:  # Vérification du statut de la voiture
-                return Response({"error": "Impossible de supprimer cette voiture car lié à une réservation."},
-                                status=status.HTTP_403_FORBIDDEN)
-            else:
-                voiture.delete()
-                return Response({"success": "Voiture supprimée avec succès."}, status=status.HTTP_204_NO_CONTENT)
-                
+
+            # Vérification si la voiture est liée à une réservation non encore finie
+            reservations_non_finies = Reservation.objects.filter(
+                Q(voiture=voiture) & Q(dateRetour__gte=date.today()) & Q(statutReservation=False)
+            )
+
+            if reservations_non_finies.exists():
+                return Response(
+                    {"detail": "Impossible de supprimer la voiture car elle est liée à une réservation qui n'est pas terminée."},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            voiture.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
         except Voiture.DoesNotExist:
-            return Response({"error": "Voiture non trouvée."}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"detail": "Voiture not found."}, status=status.HTTP_404_NOT_FOUND)
 
 # Définition de la classe pour rechercher une voiture en fonction de sa marque
 class RechercheVoitureParMarqueAPIView(APIView):

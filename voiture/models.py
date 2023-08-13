@@ -6,8 +6,8 @@ from users.models import Proprietaire
 # Create your models here.
 class Voiture(models.Model):
     id = models.AutoField(primary_key=True)
-    proprietaire = models.ForeignKey(Proprietaire, on_delete=models.CASCADE)
-    modele = models.ForeignKey(Modele, on_delete=models.CASCADE)
+    proprietaire = models.ForeignKey(Proprietaire, on_delete=models.SET_NULL, null=True)
+    modele = models.ForeignKey(Modele, on_delete=models.SET_NULL, null=True)
     numeroSerie = models.CharField(max_length=100, unique=True)
     vinNumber = models.CharField(max_length=100, unique=True)
     couleur = models.CharField(max_length=50)

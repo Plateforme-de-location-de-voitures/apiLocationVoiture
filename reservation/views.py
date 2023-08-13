@@ -63,7 +63,7 @@ class ReservationUpdateAPIView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        if serializer.is_valid():
+        if serializer.is_valid():  
             serializer.save()
 
             instance = Reservation.objects.get(dateReservation=serializer.data.get('dateReservation'))
@@ -82,11 +82,12 @@ class ReservationDeleteAPIView(APIView):
            
             reservation = Reservation.objects.get(pk=reservation_id)
         except Reservation.DoesNotExist:
-            return Response({"error": "La réservation spécifiée n'existe pas."}, status=status.HTTP_404_NOT_FOUND)
-
-        if reservation.statutReservation == True:
             reservation.delete()
             return Response({"success": "Réservation supprimée avec succès."}, status=status.HTTP_200_OK)
+
+        if reservation.statutReservation == True:
+            return Response({"error": "La réservation spécifiée n'existe pas."}, status=status.HTTP_404_NOT_FOUND)
+
         else:
             return Response({"error": "Vous ne pouvez pas supprimer cette réservation car elle est 'en cours'."},
                             status=status.HTTP_400_BAD_REQUEST)
@@ -141,7 +142,8 @@ class RechercheDesVoituresEntreDeuxDatesAPIView(APIView):
 
         reservations_chevauchantes = Reservation.objects.filter(
             dateReservation__lte= date_retour,
-            dateRetour__gte=date_reservation
+            dateRetour__gte=date_reservation,
+            statutReservation=False
         )
 
         voitures_indisponibles = Voiture.objects.filter(reservation__in=reservations_chevauchantes)

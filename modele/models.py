@@ -5,7 +5,7 @@ from marque.models import Marque
 class Modele(models.Model):
     id = models.AutoField(primary_key=True)
     nom = models.CharField(max_length=25, default='')
-    marque = models.ForeignKey(Marque, on_delete=models.CASCADE)
+    marque = models.ForeignKey(Marque, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.nom

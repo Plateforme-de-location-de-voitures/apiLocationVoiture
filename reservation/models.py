@@ -9,8 +9,8 @@ class Reservation(models.Model):
     dateReservation = models.DateField()
     dateRetour = models.DateField()
     statutReservation = models.BooleanField(default=False)
-    client = models.ForeignKey(Client, on_delete=models.CASCADE)
-    voiture = models.ForeignKey(Voiture, on_delete=models.CASCADE)
+    client = models.ForeignKey(Client, on_delete=models.SET_NULL, null=True)
+    voiture = models.ForeignKey(Voiture, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.dateReservation
